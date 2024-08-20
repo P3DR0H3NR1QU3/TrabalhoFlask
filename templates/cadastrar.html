@@ -1,0 +1,28 @@
+{% extends "fonte.html" %}
+
+{% block titulo %}
+    - CADASTRO
+{% endblock %}
+
+{% block conteudo %}
+<div class="telaCad">
+  <h1 class="titleareaCad">Cadastrar Produto </h1>
+  <div class="areaCad">
+    <form action="/cadastrar_enviar" method="post">
+      <div class="barra1">
+        <p>Nome:</p>
+        <p><input type="text" name="nome" class="blockCad" /></p>
+        <p>Categoria:</p>
+        <p><input type="text" name="categoria" class="blockCad" /></p>
+      </div>
+      <div class="barra1">
+      <p>Quantidade:</p>
+      <p><input type="number" name="quantidade" class="blockCad" /></p>
+      <p>Preço:</p>
+      <p><input type="number" step="0.01" name="preco" class="blockCad" /></p>
+      </div>
+      <p class="buttonCad"><button type="submit">Cadastrar</button></p>
+    </form>
+  </div>
+</div>
+{% endblock %}
