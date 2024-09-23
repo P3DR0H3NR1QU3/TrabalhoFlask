@@ -1,6 +1,14 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, Blueprint, url_for
+from utils import db
+from flask_migrate import Migrate
+
+
+
 
 app = Flask(__name__)
+app.secret_key = "Minha_chave_Secreta"
+
+conexao = "sqlite///meubanco.sqlite"
 
 produtos = []
 
