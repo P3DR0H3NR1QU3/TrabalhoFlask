@@ -1,65 +1,68 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from utils import db
+from models import Produto
 
-@app.route('/')
-def principal():
-    return render_template('principal.html')
+produto_route = Blueprint('produto', __name__)
 
-@app.route('/cadastrar')
-def cadastrar():
+@produto_route.route('/listar_Produtos')
+def listagem_produtos():
+    lista_produto = Produto.query.all()
+    return render_template('listar.html', lista=lista_produto)
+
+@produto_route.route('/cadastrar')
+def cadastrar_produto():
     return render_template('cadastrar.html')
 
-@app.route('/cadastrar_enviar', methods=['POST'])
-def cadastrar_enviar():
+
+
+@produto_route.route('/cadastrar_enviar', methods=['POST'])
+def cadastrar_enviar_produto():
     nome = request.form['nome']
     categoria = request.form['categoria']
     quantidade = request.form['quantidade']
-    preco = request.form['preco']
+    valor = request.form['valor']
+
+    p = Produto(nome, categoria, quantidade, valor)
+
+    db.session.add(p)
+    db.session.commit()
     
-    global max
-    novo_Produto = {
-        'id': max + 1,
-        'nome' : nome,
-        'categoria' : categoria,
-        'quantidade': quantidade,
-        'preco': preco
-    }
+    flash('Produto cadastrado com sucesso!', 'success')
+    return redirect(url_for('produto.listagem_produtos'))
 
-    produtos.append(novo_Produto)
-
-    max+=1
-
-    return redirect('/cadastrar')
-
-@app.route('/listar_produtos')
-def listar():
-    return render_template('listar.html', produtos = produtos)
-
-
-@app.route('/editar/<int:id_produto>')
+@produto_route.route('/editar/<int:id_produto>')
 def editar(id_produto):
-    dados_produto = [item for item in produtos if item['id'] == id_produto][0]
-    return render_template('editar.html', dados_produto = dados_produto)  
 
-@app.route('/editar_enviar', methods=['POST'])
+    p = Produto.query.get(id_produto)
+
+    return render_template('editar.html', dados_produto=p)
+
+@produto_route.route('/editar_enviar', methods=['POST'])
 def editar_enviar():
     id_produto = request.form['id_produto']
     nome = request.form['nome']
     categoria = request.form['categoria']
     quantidade = request.form['quantidade']
-    preco = request.form['preco']
+    valor = request.form['valor']
 
-    dados_produto = [item for item in produtos if item['id'] == int(id_produto)][0]
+    p = Produto.query.get(id_produto)
+    p.nome = nome
+    p.categoria = categoria
+    p.quantidade = quantidade
+    p.valor = valor
 
-    dados_produto['nome'] = nome
-    dados_produto['categoria'] = categoria
-    dados_produto['quantidade'] = quantidade
-    dados_produto['preco'] = preco
+    db.session.add(p)
+    db.session.commit()
 
-    return redirect('/listar_produtos')
+    flash('Produto editado com sucesso!', 'success')
+    return redirect(url_for('produto.listagem_produtos'))
 
-@app.route('/excluir/<int:id_produto>')
+@produto_route.route('/excluir/<int:id_produto>')
 def excluir(id_produto):
-    global produtos
-    produtos = [item for item in produtos if item['id'] != id_produto]
+    p = Produto.query.get(id_produto)
 
-    return redirect(('/listar_produtos'))
+    db.session.delete(p)
+    db.session.commit()
+
+    flash('Produto excluído com sucesso!','danger')
+    return redirect(url_for('produto.listagem_produtos'))
