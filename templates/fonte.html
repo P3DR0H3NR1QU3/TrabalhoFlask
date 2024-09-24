@@ -24,8 +24,8 @@
   <ul>
     <div class="opcoes">
       <li><a href="/">Home</a></li>
-      <li><a href="/cadastrar">Cadastrar</a></li>
-      <li><a href="/listar_produtos">Listar</a></li>
+      <li><a href="{{ url_for('produto.cadastrar_produto') }}">Cadastrar</a></li>
+      <li><a href="{{ url_for('produto.listagem_produtos') }}">Listar</a></li>
     </div>
   </ul>
   {% block conteudo %}
