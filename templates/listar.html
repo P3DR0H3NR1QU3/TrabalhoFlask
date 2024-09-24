@@ -17,14 +17,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in produtos %}
+                {% for item in lista %}
                 <tr>
                     <td>{{item.id}}</td>
                     <td>{{item.nome}}</td>
                     <td>{{item.categoria}}</td>
                     <td>{{item.quantidade}}</td>
                     <td>{{item.preco}}</td>
-                    <td><a class="editar" href="/editar/{{item.id}}">Editar</a></td>
+                    <td><a class="editar" href="editar" href="{{ url_for('produto.editar', id_produto=item.id) }}">Editar</a></td>
                     <td><a href="/excluir/{{item.id}} ">Excluir</a></td>
                 </tr>
                 {% endfor %}

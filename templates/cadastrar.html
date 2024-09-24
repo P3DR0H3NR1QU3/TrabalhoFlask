@@ -1,5 +1,6 @@
 {% extends "fonte.html" %}
 
+
 {% block titulo %}
     - CADASTRO
 {% endblock %}
@@ -8,7 +9,7 @@
 <div class="telaCad">
   <h1 class="titleareaCad">Cadastrar Produto </h1>
   <div class="areaCad">
-    <form action="/cadastrar_enviar_produto" method="post">
+    <form action="{{ url_for('produto.cadastrar_enviar_produto') }}" method="post">
       <div class="barra1">
         <p>Nome:</p>
         <p><input type="text" name="nome" class="blockCad" /></p>
