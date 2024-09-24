@@ -7,14 +7,14 @@ class Produto(db.Model):
     nome = db.Column(db.String(100))
     categoria = db.Column(db.String(200))
     quantidade = db.Column(db.Integer)
-    valor = db.Column(db.Float)
+    preco = db.Column(db.Float)
 
 
-    def __init__(self, nome, categoria, quantidade, valor):
+    def __init__(self, nome, categoria, quantidade, preco):
         self.nome = nome
         self.categoria = categoria
         self.quantidade = quantidade
-        self.valor = valor
+        self.preco = preco
     
     def __repr__(self):
-        return "<Pedido {} - {} - {} - {}>".format(self.pedido.nome, self.pedido.categoria, self.pedido.quantidade, self.pedido.valor)
+        return "<Pedido {} - {} - {} - {}>".format(self.pedido.nome, self.pedido.categoria, self.pedido.quantidade, self.pedido.preco)
